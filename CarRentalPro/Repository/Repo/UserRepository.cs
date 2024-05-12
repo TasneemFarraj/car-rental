@@ -16,41 +16,41 @@ public class UserRepository : IUserRepository
 
     public async Task AddUser(User user)
     {
-        await _db.Users.AddAsync(user);
+        await _db.User.AddAsync(user);
         await _db.SaveChangesAsync();
     }
 
     public async Task DeleteUser(int Id)
     {
-        var data = await _db.Users.FindAsync(Id);
+        var data = await _db.User.FindAsync(Id);
         if (data != null)
         {
-            _db.Users.Remove(data);
+            _db.User.Remove(data);
             await _db.SaveChangesAsync();
         }
     }
 
     public async Task<User> GetAsync(int Id)
     {
-        var data = await _db.Users.FindAsync(Id);
+        var data = await _db.User.FindAsync(Id);
         return data;
     }
 
     public async Task<List<User>> GetListAsync()
     {
-        var data = await _db.Users.ToListAsync();
+        var data = await _db.User.ToListAsync();
         return data;
     }
 
     public async Task<User> LoginUser(User user)
     {
-        var data = _db.Users.ToList().Where(x=>x.Password==user.Password &&x.UserName==user.UserName).SingleOrDefault();
+        var data = _db.User.ToList().Where(x=>x.Password==user.Password &&x.UserName==user.UserName).SingleOrDefault();
         return data;
     }
 
     public async Task UpdateUser(User user)
     {
-        var data = await _db.Users.FindAsync(user.Id);
+        var data = await _db.User.FindAsync(user.Id);
         if (data != null)
         {
             data.Id = user.Id;
@@ -59,7 +59,7 @@ public class UserRepository : IUserRepository
             data.Password = user.Password;
             data.PasswordConfirm = user.PasswordConfirm;
            
-            _db.Users.Update(data);
+            _db.User.Update(data);
             _db.SaveChanges();
         }
     }

@@ -4,7 +4,7 @@ namespace CarRentalPro.Authorization
 {
     public class InformationToken
     {
-        public static Response.JwtAuthResponse GetInfoUsers(string strToken)
+        public static Response.JwtAuthResponse GetInfoUser(string strToken)
         {
             var handler = new JwtSecurityTokenHandler();
             var JwtToken = handler.ReadJwtToken(strToken.Replace("Bearer ", ""));

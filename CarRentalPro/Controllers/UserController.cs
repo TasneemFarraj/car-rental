@@ -13,9 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentalPro.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : ControllerBase
+     public class UserController : ControllerBase
     {
         private readonly IUOW _uOW;
         public IAuthentication<UserDto> Jwt { get; }

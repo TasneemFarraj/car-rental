@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="File\Images\" />
+    <Folder Include="File\Image\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

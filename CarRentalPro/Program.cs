@@ -30,13 +30,12 @@ internal class Program
         builder.Services.AddControllers().AddNewtonsoftJson();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
-
-        builder.Services.AddScoped<IUserRepository, UserRepository>();
-        builder.Services.AddScoped<IAuthentication<UserDto>, Authentication>();
         builder.Services.AddTransient<IUOW, UOW>();
 
+        builder.Services.AddScoped<IAuthentication<UserDto>, Authentication>();
 
-
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<ICarSliderRepository, CarSliderRepository>();
 
 
 

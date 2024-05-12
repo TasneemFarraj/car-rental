@@ -8,7 +8,9 @@ namespace CarRentalPro.Data.Models
 
         { 
         }
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<CarSlider> CarSlider { get; set; }
+
 
 
     }
