@@ -30,6 +30,11 @@ public class UserRepository : IUserRepository
         }
     }
 
+    public async Task<User> ForgetPasswordUser(User user)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<User> GetAsync(int Id)
     {
         var data = await _db.User.FindAsync(Id);

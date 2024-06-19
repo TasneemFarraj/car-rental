@@ -10,4 +10,6 @@ public interface IUserRepository
     Task UpdateUser(User user);
     Task DeleteUser(int Id);
     Task<User> LoginUser(User user);
+    Task<User> ForgetPasswordUser(User user);
+
 }

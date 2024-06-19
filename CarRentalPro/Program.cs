@@ -4,12 +4,6 @@ using CarRentalPro.Dtos.UserDtos;
 using CarRentalPro.Repository.IRepo;
 using CarRentalPro.Repository.Repo;
 using CarRentalPro.UnitOfWork;
-using CarRentalPro.Data;
-using CarRentalPro.Data.Models;
-using CarRentalPro.Dtos.UserDtos;
-using CarRentalPro.Repository.IRepo;
-using CarRentalPro.Repository.Repo;
-using CarRentalPro.UnitOfWork;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +11,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Microsoft.Extensions.DependencyInjection;
 
 internal class Program
 {
@@ -36,6 +31,12 @@ internal class Program
 
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<ICarSliderRepository, CarSliderRepository>();
+        builder.Services.AddScoped<IWhyRepositoy, WhyRepositoy>();
+        builder.Services.AddScoped<IAboutRepository, AboutRepository>();
+        builder.Services.AddScoped<ITestimonialsRepository, TestimonialsRepository>();
+        builder.Services.AddScoped<IContactRepository, ContactRepository>();
+        builder.Services.AddScoped<ICtaRepository, CtaRepository>();
+
 
 
 

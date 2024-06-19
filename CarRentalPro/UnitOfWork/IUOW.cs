@@ -7,6 +7,11 @@ namespace CarRentalPro.UnitOfWork
     {
         public IUserRepository User { get; set; }
         public ICarSliderRepository CarSlider { get; set; }
+        public IWhyRepositoy Why { get; set; }
+        public IAboutRepository About { get; set; }
+        public ITestimonialsRepository Testimonials { get; set; }
+        public IContactRepository Contact { get; set; }
+        public ICtaRepository Cta { get; set; }
 
     }
 }

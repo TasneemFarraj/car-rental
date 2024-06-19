@@ -67,7 +67,6 @@ namespace CarRentalPro.Controllers
         {
             var apiResponse = new ResponseStandardJsonApi();
 
-
             try
             {
                 var mapper = AutoMapperConfig.CreateMapper();
@@ -105,13 +104,12 @@ namespace CarRentalPro.Controllers
         {
             var apiResponse = new ResponseStandardJsonApi();
 
-
             try
             {
                 var mapper = AutoMapperConfig.CreateMapper();
                 var data = mapper.Map<CarSlider>(dto);
                 if (dto.Image is not null)
-                    data.Image = ImageUploader.Upload(dto.Image, FileTypeEnum.Image, "https://localhost:7169/");
+                    data.Image = ImageUploader.Upload(dto.Image, FileTypeEnum.Image, "https://localhost:5000/");
 
                 if (data is not null)
                 {
@@ -152,7 +150,7 @@ namespace CarRentalPro.Controllers
                 var mapper = AutoMapperConfig.CreateMapper();
                 var data = mapper.Map<CarSlider>(dto);
                 if (dto.Image is not null)
-                    data.Image = ImageUploader.Upload(dto.Image, FileTypeEnum.Image, "https://localhost:7169/");
+                    data.Image = ImageUploader.Upload(dto.Image, FileTypeEnum.Image, "https://localhost:5000/");
                 await _uOW.CarSlider.UpdateCarSlider(data);
 
                 if (data is not null)
@@ -184,16 +182,14 @@ namespace CarRentalPro.Controllers
 
 
         [HttpDelete(nameof(RemoveCarSlider))]
-        public async Task<ResponseStandardJsonApi> RemoveCarSlider(int id)
+        public async Task<ResponseStandardJsonApi> RemoveCarSlider(int Id)
         {
-
-
             var apiResponse = new ResponseStandardJsonApi();
 
             try
             {
-                await _uOW.CarSlider.DeleteCarSlider(id);
-                if (id != 0)
+                await _uOW.CarSlider.DeleteCarSlider(Id);
+                if (Id != 0)
                 {
                     apiResponse.Message = "Show Rows";
                     apiResponse.Code = Ok().StatusCode;
