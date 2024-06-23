@@ -36,6 +36,8 @@ namespace CarRentalPro.AutoMapper
                 M.CreateMap<Cta, WriteCtaDto>().ReverseMap();
                 M.CreateMap<Cta, ReadCtaDto>().ReverseMap();
 
+                M.CreateMap<Home, WriteHomeDto>().ReverseMap();
+                M.CreateMap<Home, ReadHomeDto>().ReverseMap();
 
             });
             return MapConfig.CreateMapper();

@@ -47,9 +47,10 @@ namespace CarRentalPro.Repository.Repo;
             {
                 data.Id = cta.Id;
                 data.Image = cta.Image;
-            }
+            
             _db.Cta.Update(data);
             _db.SaveChanges();
         }
     }
 
+}

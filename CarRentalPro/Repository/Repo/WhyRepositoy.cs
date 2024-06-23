@@ -50,7 +50,7 @@ namespace CarRentalPro.Repository.Repo
                 data.Title = why.Title;
                 data.Description = why.Description;
                 data.Image= why.Image;
-            }
+            
 
             _db.Why.Update(data);
             _db.SaveChanges();
@@ -58,3 +58,4 @@ namespace CarRentalPro.Repository.Repo
     }
 }
 
+}

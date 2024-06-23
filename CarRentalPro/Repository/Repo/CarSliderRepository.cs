@@ -58,8 +58,9 @@ public class CarSliderRepository : ICarSliderRepository
             data.Automatic = carslider.Automatic;
             data.SuitCase = carslider.SuitCase;
 
-        }
         _db.CarSlider.Update(data);
         _db.SaveChanges();
+        }
+       
     }
 }

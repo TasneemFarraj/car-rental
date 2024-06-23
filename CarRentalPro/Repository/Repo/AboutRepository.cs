@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarRentalPro.Repository.Repo
 {
-    public class AboutRepository: IAboutRepository
+    public class AboutRepository : IAboutRepository
     {
         private readonly AppDBContext _db;
 
@@ -48,18 +48,19 @@ namespace CarRentalPro.Repository.Repo
             {
                 data.Id = about.Id;
                 data.Title = about.Title;
-                data.Description = about.Description; 
+                data.Description = about.Description;
                 data.Image = about.Image;
                 data.CarTypes = about.CarTypes;
-                data.RentalPoints = about.RentalPoints;                
+                data.RentalPoints = about.RentalPoints;
                 data.Customers = about.Customers;
                 data.TotalCars = about.TotalCars;
                 data.Offers = about.Offers;
+
+                _db.About.Update(data);
+                _db.SaveChanges();
             }
-            _db.About.Update(data);
-            _db.SaveChanges();
+
         }
     }
-
 }
 

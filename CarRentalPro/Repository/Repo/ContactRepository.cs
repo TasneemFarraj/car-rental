@@ -53,11 +53,11 @@ namespace CarRentalPro.Repository.Repo
                 data.RentalPoints = contact.RentalPoints;
                 data.pages=contact.pages;
                 data.WorkingHours = contact.WorkingHours;
-            }
+            
             _db.Contact.Update(data);
             _db.SaveChanges();
         }
     }
-
+}
 }
 

@@ -4,6 +4,7 @@ namespace CarRentalPro.Dtos.CredDtos
 {
     public class ReadCarSliderDto
     {
+        public int Id { get; set; }
         public string Type { get; set; }
         public string Name { get; set; }
         public string Price { get; set; }
@@ -17,12 +18,14 @@ namespace CarRentalPro.Dtos.CredDtos
     }
     public class ReadWhyDto
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
     }
     public class ReadAboutDto
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
@@ -35,6 +38,7 @@ namespace CarRentalPro.Dtos.CredDtos
     }
     public class ReadTestimonialsDto
     {
+        public int Id { get; set; }
         public string Message { get; set; }
         public string Image { get; set; }
         public string Name { get; set; }
@@ -42,6 +46,7 @@ namespace CarRentalPro.Dtos.CredDtos
     }
     public class ReadContactDto
     {
+        public int Id { get; set; }
         public string Image { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
@@ -52,8 +57,21 @@ namespace CarRentalPro.Dtos.CredDtos
     }
     public class ReadCtaDto
     {
-        public string? Image { get; set; }
+        public int Id { get; set; }
+        public string Image { get; set; }
+
+    }
+    public class ReadHomeDto
+    {
+        public int Id { get; set; }
+        public string UserName { get; set; }
+        public string NavBar { get; set; }
+        public string Image { get; set; }
+        public string Description { get; set; }
+        public string Title { get; set; }
 
     }
 }
+
+
 

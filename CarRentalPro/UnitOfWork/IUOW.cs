@@ -12,6 +12,8 @@ namespace CarRentalPro.UnitOfWork
         public ITestimonialsRepository Testimonials { get; set; }
         public IContactRepository Contact { get; set; }
         public ICtaRepository Cta { get; set; }
+        public IHomeRepository Home { get; set; }
+
 
     }
 }

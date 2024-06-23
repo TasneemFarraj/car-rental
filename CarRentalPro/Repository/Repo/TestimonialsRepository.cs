@@ -53,9 +53,10 @@ namespace CarRentalPro.Repository.Repo
                 data.Job = testimonials.Job;
                 data.Message= testimonials.Message;
 
-            }
+            
             _db.Testimonials.Update(data);
             _db.SaveChanges();
         }
     }
+}
 }

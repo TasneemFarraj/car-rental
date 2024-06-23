@@ -6,7 +6,7 @@ public class UOW : IUOW
 
 {
     public UOW(IUserRepository user, ICarSliderRepository carslider, IWhyRepositoy why, IAboutRepository about, 
-               ITestimonialsRepository testimonials, IContactRepository contact, ICtaRepository cta)
+               ITestimonialsRepository testimonials, IContactRepository contact, ICtaRepository cta, IHomeRepository home)
     {
         User = user;
         CarSlider = carslider;
@@ -15,6 +15,7 @@ public class UOW : IUOW
         Testimonials = testimonials; 
         Contact = contact;
         Cta = cta;
+        Home = home;
     }
     public IUserRepository User { get; set; }
     public ICarSliderRepository CarSlider { get; set; }
@@ -23,6 +24,8 @@ public class UOW : IUOW
     public ITestimonialsRepository Testimonials { get; set; }
     public IContactRepository Contact { get; set; }
     public ICtaRepository Cta { get; set; }
+    public IHomeRepository Home { get; set; }
+
 }
 
 
