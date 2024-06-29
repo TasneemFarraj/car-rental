@@ -16,8 +16,6 @@ namespace CarRentalPro.Data.Models
         public DbSet<Testimonials> Testimonials { get; set; }
         public DbSet<Contact> Contact { get; set; }
         public DbSet<Cta> Cta { get; set; }
-
-
     }
 }
 

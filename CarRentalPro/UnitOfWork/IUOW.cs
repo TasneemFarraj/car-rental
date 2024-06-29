@@ -1,19 +1,16 @@
 ﻿using CarRentalPro.Repository.IRepo;
-using CarRentalPro.Repository.Repo;
 
 namespace CarRentalPro.UnitOfWork
 {
-    public interface IUOW 
+    public interface IUOW
     {
-        public IUserRepository User { get; set; }
-        public ICarSliderRepository CarSlider { get; set; }
-        public IWhyRepositoy Why { get; set; }
-        public IAboutRepository About { get; set; }
-        public ITestimonialsRepository Testimonials { get; set; }
-        public IContactRepository Contact { get; set; }
-        public ICtaRepository Cta { get; set; }
-        public IHomeRepository Home { get; set; }
-
-
+        IUserRepository User { get; set; }
+        ICarSliderRepository CarSlider { get; set; }
+        IWhyRepositoy Why { get; set; }
+        IAboutRepository About { get; set; }
+        ITestimonialsRepository Testimonials { get; set; }
+        IContactRepository Contact { get; set; }
+        ICtaRepository Cta { get; set; }
+        IHomeRepository Home { get; set; }
     }
 }

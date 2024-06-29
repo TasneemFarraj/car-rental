@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 
 internal class Program
 {
@@ -39,8 +40,9 @@ internal class Program
         builder.Services.AddScoped<IHomeRepository, HomeRepository>();
 
 
-
-
+        // Register email settings and email service
+        builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+        builder.Services.AddTransient<IEmailService, EmailService>();
 
         builder.Services.AddSwaggerGen(c =>
         {

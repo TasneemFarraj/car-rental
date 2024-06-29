@@ -49,8 +49,13 @@ public class UserRepository : IUserRepository
 
     public async Task<User> LoginUser(User user)
     {
-        var data = _db.User.ToList().Where(x=>x.Password==user.Password &&x.UserName==user.UserName).SingleOrDefault();
+        var data = _db.User.SingleOrDefault(x => x.Password == user.Password && x.UserName == user.UserName);
         return data;
+    }
+
+    public async Task<User> GetUserByEmailAsync(string email)
+    {
+        return await _db.User.SingleOrDefaultAsync(u => u.Email == email);
     }
 
     public async Task UpdateUser(User user)
@@ -58,15 +63,16 @@ public class UserRepository : IUserRepository
         var data = await _db.User.FindAsync(user.Id);
         if (data != null)
         {
-            data.Id = user.Id;
             data.UserName = user.UserName;
+            data.FirstName= user.FirstName;
+            user.LastName = user.LastName;
             data.UserType = user.UserType;
             data.Password = user.Password;
             data.PasswordConfirm = user.PasswordConfirm;
-           
+            data.ResetPin = user.ResetPin;
+
             _db.User.Update(data);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
     }
 }
-
