@@ -1,15 +1,16 @@
-﻿using CarRentalPro.Repository.IRepo;
-using System.Net;
-using System.Net.Mail;
+﻿using MailKit.Net.Smtp;
+using MimeKit;
+using MimeKit.Text;
 using Microsoft.Extensions.Options;
 using CarRentalPro.Data.Models;
+using CarRentalPro.Repository.IRepo;
+using System.Threading.Tasks;
 
 namespace CarRentalPro.Repository.Repo
 {
     public class EmailService : IEmailService
     {
-       
-    private readonly EmailSettings _emailSettings;
+        private readonly EmailSettings _emailSettings;
 
         public EmailService(IOptions<EmailSettings> emailSettings)
         {
@@ -18,25 +19,23 @@ namespace CarRentalPro.Repository.Repo
 
         public async Task SendEmailAsync(string toEmail, string subject, string message)
         {
-            var smtpClient = new SmtpClient(_emailSettings.SmtpServer)
+            var emailMessage = new MimeMessage();
+            emailMessage.From.Add(new MailboxAddress(_emailSettings.SenderName, _emailSettings.SenderEmail));
+            emailMessage.To.Add(new MailboxAddress("", toEmail));
+            emailMessage.Subject = subject;
+
+            emailMessage.Body = new TextPart(TextFormat.Html)
             {
-                Port = _emailSettings.SmtpPort,
-                Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password),
-                EnableSsl = true,
+                Text = message
             };
 
-            var mailMessage = new MailMessage
+            using (var client = new SmtpClient())
             {
-                From = new MailAddress(_emailSettings.SenderEmail, _emailSettings.SenderName),
-                Subject = subject,
-                Body = message,
-                IsBodyHtml = true,
-            };
-
-            mailMessage.To.Add(toEmail);
-
-            await smtpClient.SendMailAsync(mailMessage);
+                await client.ConnectAsync(_emailSettings.SmtpServer, _emailSettings.SmtpPort, true);
+                await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password);
+                await client.SendAsync(emailMessage);
+                await client.DisconnectAsync(true);
+            }
         }
     }
 }
-

@@ -16,6 +16,13 @@ namespace CarRentalPro.Data.Models
         public DbSet<Testimonials> Testimonials { get; set; }
         public DbSet<Contact> Contact { get; set; }
         public DbSet<Cta> Cta { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>().Property(u => u.ResetPin).HasMaxLength(4);
+            modelBuilder.Entity<User>().Property(u => u.ResetPinExpiration).HasColumnType("datetime");
+        }
     }
 }
-
+ 

@@ -1,4 +1,6 @@
-﻿namespace CarRentalPro.Repository.IRepo
+﻿using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+namespace CarRentalPro.Repository.IRepo
 {
     public interface IEmailService
     {

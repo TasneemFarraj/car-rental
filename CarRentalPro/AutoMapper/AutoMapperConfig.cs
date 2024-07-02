@@ -15,10 +15,9 @@ namespace CarRentalPro.AutoMapper
                 M.CreateMap<User, UserDto>().ReverseMap();
                 M.CreateMap<User, LoginDto>().ReverseMap();
                 M.CreateMap<User, WriteUserDto>().ReverseMap();
-                M.CreateMap<User, ForgetPasswordDto>().ReverseMap();
-
-
-                M.CreateMap<CarSlider, WriteCarSliderDto>().ReverseMap();
+                M.CreateMap<User, ForgotPasswordDto>().ReverseMap();
+      
+               M.CreateMap<CarSlider, WriteCarSliderDto>().ReverseMap();
                 M.CreateMap<CarSlider, ReadCarSliderDto>().ReverseMap();
 
                 M.CreateMap<Why, WriteWhyDto>().ReverseMap();

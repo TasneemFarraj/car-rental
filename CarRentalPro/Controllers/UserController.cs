@@ -1,166 +1,154 @@
 ﻿using CarRentalPro.Authorization;
 using CarRentalPro.AutoMapper;
-using CarRentalPro.Data;
-using CarRentalPro.Data.Enum;
 using CarRentalPro.Data.Models;
 using CarRentalPro.Dtos.CredDtos;
 using CarRentalPro.Dtos.UserDtos;
 using CarRentalPro.Repository.IRepo;
 using CarRentalPro.Response;
 using CarRentalPro.UnitOfWork;
-using CarRentalPro.Upload;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System.Linq;
+using System;
 using System.Threading.Tasks;
 
 namespace CarRentalPro.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IUOW _uOW;
         private readonly IEmailService _emailService;
-        private readonly ILogger<UserController> _logger;
-        public IAuthentication<UserDto> Jwt { get; }
+        private readonly IAuthentication<UserDto> _jwt;
 
-        public UserController(IUOW uOW, IEmailService emailService, IAuthentication<UserDto> jwt, ILogger<UserController> logger)
+        public UserController(IUOW uOW, IEmailService emailService, IAuthentication<UserDto> jwt)
         {
             _uOW = uOW;
             _emailService = emailService;
-            Jwt = jwt;
-            _logger = logger;
+            _jwt = jwt;
         }
 
-
-
-
-            [HttpPost("AddUser")]
-            public async Task<IActionResult> AddUser([FromForm] WriteUserDto dto)
-            {
-                if (!ModelState.IsValid)
-                {
-                    var errors = ModelState
-                        .Where(x => x.Value.Errors.Count > 0)
-                        .ToDictionary(
-                            kvp => kvp.Key,
-                            kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
-                        );
-
-                    var errorResponse = new
-                    {
-                        Message = "Validation failed",
-                        Errors = errors
-                    };
-
-                    return BadRequest(errorResponse);
-                }
-
-                var apiResponse = new ResponseStandardJsonApi();
-
-                try
-                {
-                    var mapper = AutoMapperConfig.CreateMapper();
-                    var data = mapper.Map<User>(dto);
-
-                    if (data != null)
-                    {
-                        await _uOW.User.AddUser(data);
-                        apiResponse.Message = "User added successfully";
-                        apiResponse.Code = Ok().StatusCode;
-                        apiResponse.Success = true;
-                        apiResponse.Result = data;
-                    }
-                    else
-                    {
-                        apiResponse.Success = false;
-                        apiResponse.Message = "Mapping failed, no data";
-                        apiResponse.Code = NotFound().StatusCode;
-                        apiResponse.Result = new NullColumns[] { };
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "An error occurred while adding the user.");
-                    apiResponse.Success = false;
-                    apiResponse.Message = ex.InnerException?.Message ?? ex.Message;
-                    apiResponse.Code = BadRequest().StatusCode;
-                    apiResponse.Result = new NullColumns[] { };
-                }
-
-                return Ok(apiResponse);
-            }
-
-            // Other methods...
-        
-    
-
-
-    [HttpPost(nameof(Login))]
-        public async Task<ResponseStandardJsonApi> Login(LoginDto model)
+        [HttpPost(nameof(AddUser))]
+        public async Task<ResponseStandardJsonApi> AddUser([FromForm] WriteUserDto dto)
         {
             var apiResponse = new ResponseStandardJsonApi();
+
             try
             {
-                var Mapper = AutoMapperConfig.CreateMapper();
-                var Data = Mapper.Map<User>(model);
-
-                var Obj = await _uOW.User.LoginUser(Data);
-                var NewData = Mapper.Map<UserDto>(Obj);
-                if (Obj != null)
+                var mapper = AutoMapperConfig.CreateMapper();
+                var data = mapper.Map<User>(dto);
+                if (data != null)
                 {
-                    var _userModel = Mapper.Map<UserDto>(Obj);
-                    _userModel.Token = Jwt.GetJsonWebToken(_userModel);
-                    NewData.Token = _userModel.Token;
-                    apiResponse.Message = "Show Row";
+                    await _uOW.User.AddUser(data);
+                    apiResponse.Message = "User created successfully";
                     apiResponse.Code = Ok().StatusCode;
                     apiResponse.Success = true;
-                    apiResponse.Result = NewData;
+                    apiResponse.Result = data;
                 }
                 else
                 {
                     apiResponse.Success = false;
-                    apiResponse.Message = "Username or Password incorrect";
+                    apiResponse.Message = "No Data";
                     apiResponse.Code = NotFound().StatusCode;
                     apiResponse.Result = new NullColumns[] { };
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while logging in.");
                 apiResponse.Success = false;
                 apiResponse.Message = ex.Message;
                 apiResponse.Code = BadRequest().StatusCode;
                 apiResponse.Result = new NullColumns[] { };
             }
+
             return apiResponse;
         }
 
-      [HttpPost("ForgetPassword")]
-        public async Task<ResponseStandardJsonApi> ForgetPassword(ForgetPasswordDto model)
+        [HttpPost(nameof(Login))]
+        public async Task<IActionResult> Login(LoginDto model)
         {
             var apiResponse = new ResponseStandardJsonApi();
-
             try
             {
-                // Assuming the logic to generate and store the reset PIN
+                var mapper = AutoMapperConfig.CreateMapper();
+                var user = mapper.Map<User>(model);
 
-                // Send the reset PIN to the user's email
-                await _emailService.SendEmailAsync(model.Email, "Reset Password", $"Your reset PIN is {model.PinNumber}");
+                var authenticatedUser = await _uOW.User.LoginUser(model.UserName, model.Password);
+                if (authenticatedUser != null)
+                {
+                    var userData = mapper.Map<UserDto>(authenticatedUser);
+                    userData.Token = _jwt.GetJsonWebToken(userData);
 
-                apiResponse.Message = "Reset PIN sent to your email";
-                apiResponse.Code = Ok().StatusCode;
-                apiResponse.Success = true;
+                    apiResponse.Message = "Login successful";
+                    apiResponse.Code = StatusCodes.Status200OK;
+                    apiResponse.Success = true;
+                    apiResponse.Result = userData;
+                    return Ok(apiResponse);
+                }
+                else
+                {
+                    apiResponse.Success = false;
+                    apiResponse.Message = "Invalid email or password";
+                    apiResponse.Code = StatusCodes.Status404NotFound;
+                    apiResponse.Result = new NullColumns[] { };
+                    return NotFound(apiResponse);
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while processing the password reset request.");
                 apiResponse.Success = false;
                 apiResponse.Message = ex.Message;
-                apiResponse.Code = BadRequest().StatusCode;
+                apiResponse.Code = StatusCodes.Status400BadRequest;
+                apiResponse.Result = new NullColumns[] { };
+                return BadRequest(apiResponse);
             }
+        }
 
-            return apiResponse;
+        [HttpPost(nameof(ForgotPassword))]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto model)
+        {
+            var apiResponse = new ResponseStandardJsonApi();
+            try
+            {
+                var user = await _uOW.User.GetUserByEmailAsync(model.Email);
+
+                if (user == null)
+                {
+                    apiResponse.Success = false;
+                    apiResponse.Message = "User not found";
+                    apiResponse.Code = StatusCodes.Status404NotFound;
+                    return NotFound(apiResponse);
+                }
+
+                string resetPin = GenerateResetPin();
+
+                user.ResetPin = resetPin;
+                user.ResetPinExpiration = DateTime.UtcNow.AddMinutes(3);
+
+                await _uOW.User.UpdateUser(user);
+
+                string subject = "Password Reset Instructions";
+                string message = $"Your password reset PIN is: {resetPin}";
+
+                await _emailService.SendEmailAsync(user.Email, subject, message);
+
+                apiResponse.Success = true;
+                apiResponse.Message = "Password reset PIN sent to your email";
+                apiResponse.Code = StatusCodes.Status200OK;
+                return Ok(apiResponse);
+            }
+            catch (Exception ex)
+            {
+                apiResponse.Success = false;
+                apiResponse.Message = ex.Message;
+                apiResponse.Code = StatusCodes.Status500InternalServerError;
+                return StatusCode(apiResponse.Code, apiResponse);
+            }
+        }
+
+        private string GenerateResetPin()
+        {
+            return new Random().Next(1000, 9999).ToString();
         }
     }
 }

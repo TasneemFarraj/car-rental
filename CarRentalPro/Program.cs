@@ -94,14 +94,14 @@ internal class Program
                options.TokenValidationParameters = new TokenValidationParameters
                {
                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = false,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                    ValidAudience = builder.Configuration["Jwt:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-                };
-            });
+                   ValidateAudience = true,
+                   ValidateLifetime = false,
+                   ValidateIssuerSigningKey = true,
+                   ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                   ValidAudience = builder.Configuration["Jwt:Audience"],
+                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+               };
+           });
         builder.Services.AddCors();
         var app = builder.Build();
 
