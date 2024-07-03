@@ -13,6 +13,8 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Optivem.Framework.Core.Domain;
+using CarRentalPro.Services;
 
 internal class Program
 {
@@ -23,11 +25,13 @@ internal class Program
         // Add services to the container.
         builder.Services.AddDbContext<AppDBContext>(op =>
         op.UseSqlServer(builder.Configuration.GetConnectionString("myCon")));
+        builder.Services.AddScoped<MailService>();
         builder.Services.AddControllers().AddNewtonsoftJson();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddTransient<IUOW, UOW>();
-
+      
+       
         builder.Services.AddScoped<IAuthentication<UserDto>, Authentication>();
 
         builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -40,9 +44,8 @@ internal class Program
         builder.Services.AddScoped<IHomeRepository, HomeRepository>();
 
 
-        // Register email settings and email service
-        builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
-        builder.Services.AddTransient<IEmailService, EmailService>();
+
+
 
         builder.Services.AddSwaggerGen(c =>
         {

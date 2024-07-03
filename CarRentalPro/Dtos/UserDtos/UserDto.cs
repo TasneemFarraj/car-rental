@@ -41,6 +41,16 @@ namespace CarRentalPro.Dtos.UserDtos
         [RegularExpression(@"^(059|056)\d{7}$", ErrorMessage = "Phone number must start with 059 or 056 and be 10 digits in total.")]
         public string PhoneNumber { get; set; }
 
+        [Required(ErrorMessage = "Password is required")]
+        [MinLength(6, ErrorMessage = "Password must be at least 6 characters")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{6,}$",
+        ErrorMessage = "Password must contain at least one lowercase character, one uppercase character, one digit, and one special character.")]
+        public string Password { get; set; }
+
+        [Required(ErrorMessage = "Confirm password is required")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string PasswordConfirm { get; set; }
+
         [Required]
         public UserTypeEnum UserType { get; set; }
     }
@@ -52,14 +62,23 @@ namespace CarRentalPro.Dtos.UserDtos
     }
 
 
-    public class ForgotPasswordDto
+ /*   public class RequestResetDto
     {
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Invalid email format")]
         public string Email { get; set; }
-        public string ResetPin { get; set; }
-        public DateTime? ResetPinExpiration { get; set; }
     }
+
+    public class VerifyPinDto
+    {
+        public string Email { get; set; }
+        public string Pin { get; set; }
+    }
+
+    public class ResetPasswordDto
+    {
+        public string Email { get; set; }
+        public string NewPassword { get; set; }
+        public string ConfirmPassword { get; set; }
+    }*/
 }
 
 

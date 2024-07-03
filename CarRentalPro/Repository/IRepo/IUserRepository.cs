@@ -11,8 +11,9 @@ namespace CarRentalPro.Repository.IRepo
         Task AddUser(User user);
         Task UpdateUser(User user);
         Task DeleteUser(int Id);
-        Task<User> LoginUser(string username, string password);
-        Task<User> ForgetPasswordUser(User user);
-        Task<User> GetUserByEmailAsync(string email);
+        Task<User> LoginUser(User user);
+      /*  Task SetResetPin(string email, string pin);
+        Task<bool> ValidateResetPin(string email, string pin);
+        Task ResetPassword(string email, string newPassword);*/
     }
 }
