@@ -17,17 +17,19 @@ namespace CarRentalPro.Services
         {
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress(_configuration["EmailSettings:SenderName"], _configuration["EmailSettings:SenderEmail"]));
-            message.To.Add(new MailboxAddress("wissamcarrental24@gmail.com", to));
+            message.To.Add(new MailboxAddress("Car Rental", to));
             message.Subject = subject;
             message.Body = new TextPart("plain") { Text = body };
 
             using (var client = new SmtpClient())
             {
-                client.Connect(_configuration["EmailSettings:smtp.gmail.com"], int.Parse(_configuration["EmailSettings:465"]), true);
-                client.Authenticate(_configuration["EmailSettings:wissamcarrental24@gmail.com"], _configuration["EmailSettings:24CarRental24"]);
+                client.Connect(_configuration["EmailSettings:SmtpServer"], int.Parse(_configuration["EmailSettings:SmtpPort"]), true);
+                client.Authenticate(_configuration["EmailSettings:Username"], _configuration["EmailSettings:Password"]);
                 client.Send(message);
                 client.Disconnect(true);
             }
         }
     }
 }
+
+

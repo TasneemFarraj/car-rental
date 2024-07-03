@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BCrypt.Net;
 
 namespace CarRentalPro.Repository.Repo
 {
@@ -61,41 +60,18 @@ namespace CarRentalPro.Repository.Repo
                 data.Email = user.Email;
                 data.Password = user.Password;
                 data.PasswordConfirm = user.PasswordConfirm;
+                data.ResetPin = user.ResetPin;
+                data.ResetPinExpiration = user.ResetPinExpiration;
 
                 _db.User.Update(data);
                 await _db.SaveChangesAsync();
             }
         }
-   
 
-/*
-public async Task SetResetPin(string email, string pin)
+
+        public async Task<User> GetByEmailAsync(string email)
         {
-            var user = await _db.User.SingleOrDefaultAsync(u => u.Email == email);
-            if (user != null)
-            {
-                user.ResetPin = pin;
-                user.ResetPinExpiration = DateTime.UtcNow.AddMinutes(15); 
-                await _db.SaveChangesAsync();
-            }
+            return await _db.User.SingleOrDefaultAsync(u => u.Email == email);
         }
-
-        public async Task<bool> ValidateResetPin(string email, string pin)
-        {
-            var user = await _db.User.SingleOrDefaultAsync(u => u.Email == email);
-            return user != null && user.ResetPin == pin && user.ResetPinExpiration > DateTime.UtcNow;
-        }
-
-        public async Task ResetPassword(string email, string newPassword)
-        {
-            var user = await _db.User.SingleOrDefaultAsync(u => u.Email == email);
-            if (user != null)
-            {
-                user.Password = BCrypt.Net.BCrypt.HashPassword(newPassword);
-                user.ResetPin = null;
-                user.ResetPinExpiration = null;
-                await _db.SaveChangesAsync();
-            }
-        }*/
     }
 }

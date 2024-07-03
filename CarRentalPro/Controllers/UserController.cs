@@ -136,66 +136,7 @@ namespace CarRentalPro.Controllers
 
     }
 
-    /* [HttpPost("request-reset")]
-     public async Task<IActionResult> RequestPasswordReset([FromForm] RequestResetDto dto)
-     {
-         try
-         {
-             if (string.IsNullOrEmpty(dto.Email))
-             {
-                 return BadRequest(new { Message = "Email is required for password reset." });
-             }
-
-             var pin = new Random().Next(1000, 9999).ToString();
-
-             await _userRepository.SetResetPin(dto.Email, pin);
-
-             _mailService.SendEmail(dto.Email, "Password Reset PIN", $"Your reset PIN is {pin}");
-
-             return Ok(new { Message = "Reset PIN sent to your email." });
-         }
-         catch (Exception ex)
-         {
-             return StatusCode(500, $"Internal server error: {ex.Message}");
-         }
-     }
-
-     [HttpPost("verify-pin")]
-     public async Task<IActionResult> VerifyPin([FromForm] VerifyPinDto dto)
-     {
-         try
-         {
-             if (await _userRepository.ValidateResetPin(dto.Email, dto.Pin))
-             {
-                 return Ok(new { Message = "PIN verified, you can now reset your password." });
-             }
-             return BadRequest(new { Message = "Invalid PIN or PIN has expired." });
-         }
-         catch (Exception ex)
-         {
-             return StatusCode(500, $"Internal server error: {ex.Message}");
-         }
-     }
-
-     [HttpPost("reset-password")]
-     public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordDto dto)
-     {
-         try
-         {
-             if (dto.NewPassword != dto.ConfirmPassword)
-             {
-                 return BadRequest(new { Message = "Passwords do not match." });
-             }
-
-             await _userRepository.ResetPassword(dto.Email, dto.NewPassword);
-             return Ok(new { Message = "Password has been reset." });
-         }
-         catch (Exception ex)
-         {
-             return StatusCode(500, $"Internal server error: {ex.Message}");
-         }
-     }
- }*/
+   
 }
 
 

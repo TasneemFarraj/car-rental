@@ -14,7 +14,9 @@ namespace CarRentalPro.Data.Models
             public string Password { get; set; }
             public string PasswordConfirm { get; set; }
             public UserTypeEnum UserType { get; set; }
-         
+           public string ResetPin { get; set; }
+           public DateTime? ResetPinExpiration { get; set; }
+
 
     }
 }

@@ -61,24 +61,6 @@ namespace CarRentalPro.Dtos.UserDtos
         public string Password { get; set; }
     }
 
-
- /*   public class RequestResetDto
-    {
-        public string Email { get; set; }
-    }
-
-    public class VerifyPinDto
-    {
-        public string Email { get; set; }
-        public string Pin { get; set; }
-    }
-
-    public class ResetPasswordDto
-    {
-        public string Email { get; set; }
-        public string NewPassword { get; set; }
-        public string ConfirmPassword { get; set; }
-    }*/
 }
 
 

@@ -12,8 +12,7 @@ namespace CarRentalPro.Repository.IRepo
         Task UpdateUser(User user);
         Task DeleteUser(int Id);
         Task<User> LoginUser(User user);
-      /*  Task SetResetPin(string email, string pin);
-        Task<bool> ValidateResetPin(string email, string pin);
-        Task ResetPassword(string email, string newPassword);*/
+        Task<User> GetByEmailAsync(string email);
+
     }
 }
