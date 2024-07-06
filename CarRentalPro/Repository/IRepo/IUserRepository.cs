@@ -13,6 +13,6 @@ namespace CarRentalPro.Repository.IRepo
         Task DeleteUser(int Id);
         Task<User> LoginUser(User user);
         Task<User> GetByEmailAsync(string email);
-
+        Task<User> GetByIdAsync(int userId);
     }
 }

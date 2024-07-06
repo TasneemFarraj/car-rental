@@ -53,7 +53,8 @@ namespace CarRentalPro.Dtos.UserDtos
 
         [Required]
         public UserTypeEnum UserType { get; set; }
-    }
+    
+}
 
     public class LoginDto
     {

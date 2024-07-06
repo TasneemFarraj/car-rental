@@ -197,6 +197,29 @@ namespace CarRentalPro.Migrations
                     b.ToTable("Home");
                 });
 
+            modelBuilder.Entity("CarRentalPro.Data.Models.PasswordReset", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ResetPin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ResetPinExpiration")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PasswordReset");
+                });
+
             modelBuilder.Entity("CarRentalPro.Data.Models.Testimonials", b =>
                 {
                     b.Property<int>("Id")
@@ -257,13 +280,6 @@ namespace CarRentalPro.Migrations
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResetPin")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ResetPinExpiration")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserName")
                         .IsRequired()

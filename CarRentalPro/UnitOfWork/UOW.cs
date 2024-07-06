@@ -1,11 +1,12 @@
 ﻿using CarRentalPro.Repository.IRepo;
+using CarRentalPro.Repository.Repo;
 
 namespace CarRentalPro.UnitOfWork
 {
     public class UOW : IUOW
     {
         public UOW(IUserRepository user, ICarSliderRepository carslider, IWhyRepositoy why, IAboutRepository about,
-                   ITestimonialsRepository testimonials, IContactRepository contact, ICtaRepository cta, IHomeRepository home)
+                   ITestimonialsRepository testimonials, IContactRepository contact, ICtaRepository cta, IHomeRepository home, IPasswordResetRepository passwordReset)
         {
             User = user;
             CarSlider = carslider;
@@ -15,6 +16,7 @@ namespace CarRentalPro.UnitOfWork
             Contact = contact;
             Cta = cta;
             Home = home;
+            PasswordReset = passwordReset;
         }
 
         public IUserRepository User { get; set; }
@@ -25,5 +27,6 @@ namespace CarRentalPro.UnitOfWork
         public IContactRepository Contact { get; set; }
         public ICtaRepository Cta { get; set; }
         public IHomeRepository Home { get; set; }
+        public IPasswordResetRepository PasswordReset { get; set; }
     }
 }

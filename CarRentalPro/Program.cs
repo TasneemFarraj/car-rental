@@ -42,8 +42,7 @@ internal class Program
         builder.Services.AddScoped<IContactRepository, ContactRepository>();
         builder.Services.AddScoped<ICtaRepository, CtaRepository>();
         builder.Services.AddScoped<IHomeRepository, HomeRepository>();
-
-
+        builder.Services.AddScoped<IPasswordResetRepository, PasswordResetRepository>();
 
 
 

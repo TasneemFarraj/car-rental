@@ -60,8 +60,7 @@ namespace CarRentalPro.Repository.Repo
                 data.Email = user.Email;
                 data.Password = user.Password;
                 data.PasswordConfirm = user.PasswordConfirm;
-                data.ResetPin = user.ResetPin;
-                data.ResetPinExpiration = user.ResetPinExpiration;
+
 
                 _db.User.Update(data);
                 await _db.SaveChangesAsync();
@@ -72,6 +71,11 @@ namespace CarRentalPro.Repository.Repo
         public async Task<User> GetByEmailAsync(string email)
         {
             return await _db.User.SingleOrDefaultAsync(u => u.Email == email);
+        }
+
+        public async Task<User> GetByIdAsync(int userId)
+        {
+            return await _db.User.FindAsync(userId);
         }
     }
 }

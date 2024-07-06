@@ -118,7 +118,7 @@ namespace CarRentalPro.Controllers
                 else
                 {
                     apiResponse.Success = false;
-                    apiResponse.Message = "UserName or Password uncorect ";
+                    apiResponse.Message = "UserName or Password incorrect ";
                     apiResponse.Code = NotFound().StatusCode;
                     apiResponse.Result = new NullColumns[] { };
                 }

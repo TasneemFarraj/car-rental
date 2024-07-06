@@ -2,6 +2,7 @@
 using CarRentalPro.Dtos.UserDtos;
 using CarRentalPro.Data.Models;
 using CarRentalPro.Dtos.CredDtos;
+using CarRentalPro.Dtos;
 
 namespace CarRentalPro.AutoMapper
 {
@@ -15,10 +16,7 @@ namespace CarRentalPro.AutoMapper
                 M.CreateMap<User, UserDto>().ReverseMap();
                 M.CreateMap<User, LoginDto>().ReverseMap();
                 M.CreateMap<User, WriteUserDto>().ReverseMap();
-                M.CreateMap<User, PasswordResetRequestDto>().ReverseMap();
-                M.CreateMap<User, VerifyPinDto>().ReverseMap();
-                M.CreateMap<User, ResetPasswordDto>().ReverseMap();
-
+                M.CreateMap<PasswordReset, PasswordResetRequestDto>().ReverseMap();
 
                 M.CreateMap<CarSlider, WriteCarSliderDto>().ReverseMap();
                 M.CreateMap<CarSlider, ReadCarSliderDto>().ReverseMap();

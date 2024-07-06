@@ -1,4 +1,5 @@
 ﻿using CarRentalPro.Repository.IRepo;
+using CarRentalPro.Repository.Repo;
 
 namespace CarRentalPro.UnitOfWork
 {
@@ -12,5 +13,6 @@ namespace CarRentalPro.UnitOfWork
         IContactRepository Contact { get; set; }
         ICtaRepository Cta { get; set; }
         IHomeRepository Home { get; set; }
+        IPasswordResetRepository PasswordReset { get; set; }
     }
 }
