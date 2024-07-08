@@ -1,6 +1,7 @@
 ﻿using MailKit.Net.Smtp;
 using MimeKit;
 using Microsoft.Extensions.Configuration;
+using MailKit.Security;
 
 namespace CarRentalPro.Services
 {
@@ -23,8 +24,7 @@ namespace CarRentalPro.Services
 
             using (var client = new SmtpClient())
             {
-                client.Connect(_configuration["EmailSettings:SmtpServer"], int.Parse(_configuration["EmailSettings:SmtpPort"]), true);
-                client.Authenticate(_configuration["EmailSettings:Username"], _configuration["EmailSettings:Password"]);
+                client.Connect(_configuration["EmailSettings:SmtpServer"], int.Parse(_configuration["EmailSettings:SmtpPort"]), SecureSocketOptions.StartTls); client.Authenticate(_configuration["EmailSettings:Username"], _configuration["EmailSettings:Password"]);
                 client.Send(message);
                 client.Disconnect(true);
             }

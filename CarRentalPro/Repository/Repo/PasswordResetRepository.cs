@@ -22,7 +22,10 @@ namespace CarRentalPro.Repository.Repo
 
         public async Task<PasswordReset> GetByUserIdAsync(int userId)
         {
-            return await _db.PasswordReset.SingleOrDefaultAsync(pr => pr.UserId == userId);
+            return await _db.PasswordReset
+                  .Where(pr => pr.UserId == userId && pr.ResetPinExpiration > DateTime.UtcNow)
+                  .OrderByDescending(pr => pr.ResetPinExpiration) // Get the latest one
+                  .FirstOrDefaultAsync();
         }
 
         public async Task DeletePasswordReset(int id)

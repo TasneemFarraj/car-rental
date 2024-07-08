@@ -52,8 +52,7 @@ namespace CarRentalPro.Dtos.UserDtos
         public string PasswordConfirm { get; set; }
 
         [Required]
-        public UserTypeEnum UserType { get; set; }
-    
+        public UserTypeEnum UserType { get; set; }    
 }
 
     public class LoginDto

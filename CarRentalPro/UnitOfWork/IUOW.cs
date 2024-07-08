@@ -14,5 +14,7 @@ namespace CarRentalPro.UnitOfWork
         ICtaRepository Cta { get; set; }
         IHomeRepository Home { get; set; }
         IPasswordResetRepository PasswordReset { get; set; }
+
+        Task<int> SaveChangesAsync();
     }
 }

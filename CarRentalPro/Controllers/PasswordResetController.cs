@@ -31,6 +31,13 @@ namespace CarRentalPro.Controllers
                 return NotFound(new { Message = "User not found" });
             }
 
+            var existingPasswordReset = await _uow.PasswordReset.GetByUserIdAsync(user.Id);
+            if (existingPasswordReset != null)
+            {
+                await _uow.PasswordReset.DeletePasswordReset(existingPasswordReset.Id);
+                await _uow.SaveChangesAsync();
+            }
+
             var pin = new Random().Next(1000, 9999).ToString();
             var passwordReset = new PasswordReset
             {
@@ -40,6 +47,7 @@ namespace CarRentalPro.Controllers
             };
 
             await _uow.PasswordReset.AddPasswordReset(passwordReset);
+            await _uow.SaveChangesAsync();
 
             _mailService.SendEmail(user.Email, "Password Reset PIN", $"Your password reset PIN is: {pin}");
 
@@ -63,8 +71,7 @@ namespace CarRentalPro.Controllers
 
             return Ok(new { Message = "PIN verified successfully" });
         }
-
-        [HttpPost("reset-password")]
+        [HttpPut("reset-password")]
         public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordDto resetPasswordDto)
         {
             var user = await _uow.User.GetByEmailAsync(resetPasswordDto.Email);
@@ -79,10 +86,14 @@ namespace CarRentalPro.Controllers
                 return BadRequest(new { Message = "Invalid or expired PIN" });
             }
 
-            user.Password = BCrypt.Net.BCrypt.HashPassword(resetPasswordDto.NewPassword);
+            user.Password = resetPasswordDto.NewPassword;
+            user.PasswordConfirm = resetPasswordDto.ConfirmPassword;
+
             await _uow.User.UpdateUser(user);
+            await _uow.SaveChangesAsync();
 
             await _uow.PasswordReset.DeletePasswordReset(passwordReset.Id);
+            await _uow.SaveChangesAsync();
 
             return Ok(new { Message = "Password reset successfully" });
         }
