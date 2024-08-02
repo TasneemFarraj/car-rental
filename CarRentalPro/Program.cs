@@ -26,6 +26,8 @@ internal class Program
         builder.Services.AddDbContext<AppDBContext>(op =>
         op.UseSqlServer(builder.Configuration.GetConnectionString("myCon")));
         builder.Services.AddScoped<MailService>();
+        builder.Services.AddSingleton<AccountManagementMailService>();
+
         builder.Services.AddControllers().AddNewtonsoftJson();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();

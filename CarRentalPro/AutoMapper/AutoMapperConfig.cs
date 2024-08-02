@@ -15,6 +15,7 @@ namespace CarRentalPro.AutoMapper
 
                 M.CreateMap<User, UserDto>().ReverseMap();
                 M.CreateMap<User, LoginDto>().ReverseMap();
+                M.CreateMap<User, UpdateUserDto>().ReverseMap();
                 M.CreateMap<User, WriteUserDto>().ReverseMap();
                 M.CreateMap<PasswordReset, PasswordResetRequestDto>().ReverseMap();
 

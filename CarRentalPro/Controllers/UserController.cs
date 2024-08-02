@@ -11,19 +11,25 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CarRentalPro.Controllers
 {
-    
+    [ApiController]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IUOW _uOW;
-        public IAuthentication<UserDto> Jwt { get; }
-        public UserController(IUOW uOW, IAuthentication<UserDto> jwt)
+        private readonly IAuthentication<UserDto> _jwt;
+        private readonly AccountManagementMailService _accountManagementMailService;
+
+        public UserController(IUOW uOW, IAuthentication<UserDto> jwt, AccountManagementMailService accountManagementMailService)
         {
             _uOW = uOW;
-            Jwt = jwt;
+            _jwt = jwt;
+            _accountManagementMailService = accountManagementMailService;
         }
 
         [HttpPost("AddUser")]
@@ -51,13 +57,13 @@ namespace CarRentalPro.Controllers
 
             try
             {
-                
+
                 var mapper = AutoMapperConfig.CreateMapper();
                 var data = mapper.Map<User>(dto);
 
                 if (data != null)
                 {
-                   
+
                     await _uOW.User.AddUser(data);
 
                     apiResponse.Message = "User added successfully";
@@ -92,6 +98,66 @@ namespace CarRentalPro.Controllers
             return Ok(apiResponse);
         }
 
+     
+        [HttpPut("UpdateUser")]
+        public async Task<IActionResult> UpdateUser([FromForm] UpdateUserDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState
+                    .Where(x => x.Value.Errors.Count > 0)
+                    .ToDictionary(
+                        kvp => kvp.Key,
+                        kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                    );
+
+                return BadRequest(new { Message = "Validation failed", Errors = errors });
+            }
+
+            try
+            {
+                var mapper = AutoMapperConfig.CreateMapper();
+                var userToUpdate = mapper.Map<User>(dto);
+
+                var existingUser = await _uOW.User.GetByIdAsync(userToUpdate.Id);
+                var changes = new List<string>();
+
+                if (existingUser != null)
+                {
+                    if (existingUser.UserName != userToUpdate.UserName)
+                        changes.Add($"Username: {existingUser.UserName} -> {userToUpdate.UserName}");
+
+                    if (existingUser.FirstName != userToUpdate.FirstName)
+                        changes.Add($"First Name: {existingUser.FirstName} -> {userToUpdate.FirstName}");
+
+                    if (existingUser.LastName != userToUpdate.LastName)
+                        changes.Add($"Last Name: {existingUser.LastName} -> {userToUpdate.LastName}");
+
+                    if (existingUser.Email != userToUpdate.Email)
+                        changes.Add($"Email: {existingUser.Email} -> {userToUpdate.Email}");
+
+                    if (existingUser.PhoneNumber != userToUpdate.PhoneNumber)
+                        changes.Add($"Phone Number: {existingUser.PhoneNumber} -> {userToUpdate.PhoneNumber}");
+
+                    if (existingUser.UserType != userToUpdate.UserType)
+                        changes.Add($"User Type: {existingUser.UserType} -> {userToUpdate.UserType}");
+                }
+
+                await _uOW.User.UpdateUser(userToUpdate);
+
+                _accountManagementMailService.SendAccountModificationEmail(
+                    userToUpdate.Email,
+                    $"{userToUpdate.FirstName} {userToUpdate.LastName}",
+                    changes
+                );
+
+                return Ok(new { Message = "User updated successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "An error occurred", Error = ex.Message });
+            }
+        }
 
         [HttpPost(nameof(Login))]
         public async Task<ResponseStandardJsonApi> Login(LoginDto model)
@@ -99,30 +165,26 @@ namespace CarRentalPro.Controllers
             var apiResponse = new ResponseStandardJsonApi();
             try
             {
+                var mapper = AutoMapperConfig.CreateMapper();
+                var data = mapper.Map<User>(model);
 
-                var Mapper = AutoMapperConfig.CreateMapper();
-                var Data = Mapper.Map<User>(model);
-
-                var Obj = await _uOW.User.LoginUser(Data);
-                var NewData = Mapper.Map<UserDto>(Obj);
-                if (Obj != null)
+                var user = await _uOW.User.LoginUser(data);
+                var userDto = mapper.Map<UserDto>(user);
+                if (user != null)
                 {
-                    var _userModel = Mapper.Map<UserDto>(Obj);
-                    _userModel.Token = Jwt.GetJsonWebToken(_userModel);
-                    NewData.Token = _userModel.Token;
-                    apiResponse.Message = "Show Row";
+                    userDto.Token = _jwt.GetJsonWebToken(userDto);
+                    apiResponse.Message = "Login successful";
                     apiResponse.Code = Ok().StatusCode;
                     apiResponse.Success = true;
-                    apiResponse.Result = NewData;
+                    apiResponse.Result = userDto;
                 }
                 else
                 {
                     apiResponse.Success = false;
-                    apiResponse.Message = "UserName or Password incorrect ";
+                    apiResponse.Message = "Username or Password incorrect";
                     apiResponse.Code = NotFound().StatusCode;
                     apiResponse.Result = new NullColumns[] { };
                 }
-
             }
             catch (Exception ex)
             {
@@ -133,10 +195,5 @@ namespace CarRentalPro.Controllers
             }
             return apiResponse;
         }
-
     }
-
-   
 }
-
-

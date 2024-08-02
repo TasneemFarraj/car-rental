@@ -62,6 +62,33 @@ namespace CarRentalPro.Dtos.UserDtos
     }
 
 }
+public class UpdateUserDto
+{
+    public int Id { get; set; }
+
+    [Required(ErrorMessage = "UserName is required")]
+    [StringLength(20, MinimumLength = 3)]
+    [RegularExpression(@"^[a-zA-Z0-9._]+$", ErrorMessage = "Usernames can only contain letters, numbers, underscores, and periods (dots).")]
+    public string UserName { get; set; }
+
+    [Required(ErrorMessage = "FirstName is required")]
+    [StringLength(50)]
+    public string FirstName { get; set; }
+
+    [Required(ErrorMessage = "LastName is required")]
+    [StringLength(50)]
+    public string LastName { get; set; }
+
+    [Required]
+    [EmailAddress(ErrorMessage = "Invalid Email Address")]
+    public string Email { get; set; }
+
+    [Required]
+    [RegularExpression(@"^(059|056)\d{7}$", ErrorMessage = "Phone number must start with 059 or 056 and be 10 digits in total.")]
+    public string PhoneNumber { get; set; }
+
+    public UserTypeEnum UserType { get; set; }
+}
 
 
 
