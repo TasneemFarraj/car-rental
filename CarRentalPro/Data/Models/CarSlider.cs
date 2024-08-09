@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CarRentalPro.Data.Enum;
+using System.ComponentModel.DataAnnotations;
 
 namespace CarRentalPro.Data.Models
 {
@@ -14,8 +15,10 @@ namespace CarRentalPro.Data.Models
         public int Door { get; set; }
         public int Seat { get; set; }
         public string Petrol { get; set; }
-        public string Automatic { get; set; }
+        public TransmissionTypeEnum Transmission { get; set; }
         public int SuitCase { get; set; }
+        public CountryEnum Country { get; set; }
+
 
     }
 }

@@ -70,9 +70,8 @@ namespace CarRentalPro.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Automatic")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Country")
+                        .HasColumnType("int");
 
                     b.Property<int>("Door")
                         .HasColumnType("int");
@@ -100,6 +99,9 @@ namespace CarRentalPro.Migrations
                         .HasColumnType("real");
 
                     b.Property<int>("SuitCase")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Transmission")
                         .HasColumnType("int");
 
                     b.Property<string>("Type")

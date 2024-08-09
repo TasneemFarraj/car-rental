@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CarRentalPro.Data.Enum;
+using System.ComponentModel.DataAnnotations;
 
 namespace CarRentalPro.Dtos.CredDtos
 {
     public class WriteCarSliderDto
     {
+        public int Id { get; set; }
         public string Type { get; set; }
         public string Name { get; set; }
         public string Price { get; set; }
@@ -12,8 +14,9 @@ namespace CarRentalPro.Dtos.CredDtos
         public int Door { get; set; }
         public int Seat { get; set; }
         public string Petrol { get; set; }
-        public string Automatic { get; set; }
+        public TransmissionTypeEnum Transmission { get; set; }
         public int SuitCase { get; set; }
+        public CountryEnum Country { get; set; }
     }
     public class WriteWhyDto
     {

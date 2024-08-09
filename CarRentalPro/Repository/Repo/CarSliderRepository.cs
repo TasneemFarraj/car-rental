@@ -55,8 +55,9 @@ public class CarSliderRepository : ICarSliderRepository
             data.Seat = carslider.Seat;
             data.Petrol = carslider.Petrol;
             data.Door = carslider.Door;
-            data.Automatic = carslider.Automatic;
+            data.Transmission = carslider.Transmission;
             data.SuitCase = carslider.SuitCase;
+            data.Country = carslider.Country;
 
         _db.CarSlider.Update(data);
         _db.SaveChanges();
