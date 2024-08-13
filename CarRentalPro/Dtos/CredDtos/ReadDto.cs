@@ -3,20 +3,21 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CarRentalPro.Dtos.CredDtos
 {
-    public class ReadCarSliderDto
+    public class ReadCarDetailsDto
     {
         public int Id { get; set; }
         public string Type { get; set; }
         public string Name { get; set; }
-        public string Price { get; set; }
+        public string Description { get; set; }
+        public string PricePerDay { get; set; }
         public float Stars { get; set; }
         public string Image { get; set; }
         public int Door { get; set; }
         public int Seat { get; set; }
         public string Petrol { get; set; }
-        public TransmissionTypeEnum Transmission { get; set; }
+        public string Transmission { get; set; }
+
         public int SuitCase { get; set; }
-        public CountryEnum Country { get; set; }
     }
     public class ReadWhyDto
     {
@@ -73,7 +74,37 @@ namespace CarRentalPro.Dtos.CredDtos
         public string Title { get; set; }
 
     }
+
+
+    public class ReadCarReservationDto
+    {
+            public int Id { get; set; }
+            public int UserId { get; set; }
+            public int CarDetailsId { get; set; }
+            public DateTime PickUpDate { get; set; }
+            public DateTime DropOffDate { get; set; }
+            public string ReservationCode { get; set; }
+            public bool IsConfirmed { get; set; }
+    }
 }
+public class ReadPaymentDetailsDto
+    {
+        public int Id { get; set; }
+        public int ReservationId { get; set; }
+        public string CardNumber { get; set; }
+        public string CardholderName { get; set; }
+        public DateTime ExpiryDate { get; set; }
+        public string CVV { get; set; }
+        public IFormFile DriverLicense { get; set; }
+        public bool IsPaid { get; set; }
+    }
+    public class ReadCarFilterDto
+    {
+        public int CityId { get; set; }
+        public DateTime PickUpDate { get; set; }
+        public DateTime DropOffDate { get; set; }
+    }
+
 
 
 

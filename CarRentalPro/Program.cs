@@ -37,7 +37,7 @@ internal class Program
         builder.Services.AddScoped<IAuthentication<UserDto>, Authentication>();
 
         builder.Services.AddScoped<IUserRepository, UserRepository>();
-        builder.Services.AddScoped<ICarSliderRepository, CarSliderRepository>();
+        builder.Services.AddScoped<ICarDetailsRepository,CarDetailsRepository>();
         builder.Services.AddScoped<IWhyRepositoy, WhyRepositoy>();
         builder.Services.AddScoped<IAboutRepository, AboutRepository>();
         builder.Services.AddScoped<ITestimonialsRepository, TestimonialsRepository>();
@@ -45,6 +45,12 @@ internal class Program
         builder.Services.AddScoped<ICtaRepository, CtaRepository>();
         builder.Services.AddScoped<IHomeRepository, HomeRepository>();
         builder.Services.AddScoped<IPasswordResetRepository, PasswordResetRepository>();
+        builder.Services.AddScoped<ICarReservationRepository, CarReservationRepository>();
+        builder.Services.AddScoped<IPaymentDetailsRepository, PaymentDetailsRepository>();
+
+
+
+
 
 
 

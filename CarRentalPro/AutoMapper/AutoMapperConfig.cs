@@ -3,6 +3,7 @@ using CarRentalPro.Dtos.UserDtos;
 using CarRentalPro.Data.Models;
 using CarRentalPro.Dtos.CredDtos;
 using CarRentalPro.Dtos;
+using CarRentalPro.Repository.IRepo;
 
 namespace CarRentalPro.AutoMapper
 {
@@ -19,8 +20,8 @@ namespace CarRentalPro.AutoMapper
                 M.CreateMap<User, WriteUserDto>().ReverseMap();
                 M.CreateMap<PasswordReset, PasswordResetRequestDto>().ReverseMap();
 
-                M.CreateMap<CarSlider, WriteCarSliderDto>().ReverseMap();
-                M.CreateMap<CarSlider, ReadCarSliderDto>().ReverseMap();
+                M.CreateMap<CarDetails, WriteCarDetailsDto>().ReverseMap();
+                M.CreateMap<CarDetails, ReadCarDetailsDto>().ReverseMap();
 
                 M.CreateMap<Why, WriteWhyDto>().ReverseMap();
                 M.CreateMap<Why, ReadWhyDto>().ReverseMap();
@@ -39,6 +40,15 @@ namespace CarRentalPro.AutoMapper
 
                 M.CreateMap<Home, WriteHomeDto>().ReverseMap();
                 M.CreateMap<Home, ReadHomeDto>().ReverseMap();
+
+                M.CreateMap<CarReservation, WriteCarReservationDto>().ReverseMap();
+                M.CreateMap<CarReservation, ReadCarReservationDto>().ReverseMap();
+
+                M.CreateMap<PaymentDetails, WritePaymentDetailsDto>().ReverseMap();
+                M.CreateMap<PaymentDetails, ReadPaymentDetailsDto>().ReverseMap();
+
+                M.CreateMap<CarFilter, WriteCarFilterDto>().ReverseMap();
+                M.CreateMap<CarFilter, ReadCarFilterDto>().ReverseMap();
 
             });
             return MapConfig.CreateMapper();

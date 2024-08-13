@@ -12,18 +12,18 @@ namespace CarRentalPro.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "Automatic",
-                table: "CarSlider");
+                table: "CarDetails");
 
             migrationBuilder.AddColumn<int>(
                 name: "Country",
-                table: "CarSlider",
+                table: "CarDetails",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
             migrationBuilder.AddColumn<int>(
                 name: "Transmission",
-                table: "CarSlider",
+                table: "CarDetails",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
@@ -34,15 +34,15 @@ namespace CarRentalPro.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "Country",
-                table: "CarSlider");
+                table: "CarDetails");
 
             migrationBuilder.DropColumn(
                 name: "Transmission",
-                table: "CarSlider");
+                table: "CarDetails");
 
             migrationBuilder.AddColumn<string>(
                 name: "Automatic",
-                table: "CarSlider",
+                table: "CarDetails",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "");

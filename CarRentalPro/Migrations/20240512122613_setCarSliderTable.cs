@@ -5,13 +5,13 @@
 namespace CarRentalPro.Migrations
 {
     /// <inheritdoc />
-    public partial class setCarSliderTable : Migration
+    public partial class setCarDetailsTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "CarSlider",
+                name: "CarDetails",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -24,12 +24,11 @@ namespace CarRentalPro.Migrations
                     Door = table.Column<int>(type: "int", nullable: false),
                     Seat = table.Column<int>(type: "int", nullable: false),
                     Petrol = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Automatic = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SuitCase = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CarSlider", x => x.Id);
+                    table.PrimaryKey("PK_CarDetails", x => x.Id);
                 });
         }
 
@@ -37,7 +36,7 @@ namespace CarRentalPro.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CarSlider");
+                name: "CarDetails");
         }
     }
 }

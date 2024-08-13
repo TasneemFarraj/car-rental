@@ -64,7 +64,7 @@ namespace CarRentalPro.Migrations
                     b.ToTable("About");
                 });
 
-            modelBuilder.Entity("CarRentalPro.Data.Models.CarSlider", b =>
+            modelBuilder.Entity("CarRentalPro.Data.Models.CarDetails", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -110,7 +110,7 @@ namespace CarRentalPro.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CarSlider");
+                    b.ToTable("CarDetails");
                 });
 
             modelBuilder.Entity("CarRentalPro.Data.Models.Contact", b =>

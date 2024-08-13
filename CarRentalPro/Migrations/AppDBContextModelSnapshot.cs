@@ -22,6 +22,68 @@ namespace CarRentalPro.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("CarDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CityName")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Door")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Petrol")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PricePerDay")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Seat")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Stars")
+                        .HasColumnType("real");
+
+                    b.Property<int>("SuitCase")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Transmission")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CarDetails");
+                });
+
             modelBuilder.Entity("CarRentalPro.Data.Models.About", b =>
                 {
                     b.Property<int>("Id")
@@ -62,7 +124,7 @@ namespace CarRentalPro.Migrations
                     b.ToTable("About");
                 });
 
-            modelBuilder.Entity("CarRentalPro.Data.Models.CarSlider", b =>
+            modelBuilder.Entity("CarRentalPro.Data.Models.CarFilter", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,47 +132,70 @@ namespace CarRentalPro.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Country")
+                    b.Property<int>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Door")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("DropOffDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Petrol")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Price")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Seat")
-                        .HasColumnType("int");
-
-                    b.Property<float>("Stars")
-                        .HasColumnType("real");
-
-                    b.Property<int>("SuitCase")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Transmission")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("PickUpDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("CarSlider");
+                    b.ToTable("CarFilter");
+                });
+
+            modelBuilder.Entity("CarRentalPro.Data.Models.CarReservation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CarDetailsId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DropOfDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("PickUpDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReservationCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarDetailsId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CarReservation");
+                });
+
+            modelBuilder.Entity("CarRentalPro.Data.Models.City", b =>
+                {
+                    b.Property<int>("CityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CityId"));
+
+                    b.Property<int>("CityName")
+                        .HasColumnType("int");
+
+                    b.HasKey("CityId");
+
+                    b.ToTable("City");
                 });
 
             modelBuilder.Entity("CarRentalPro.Data.Models.Contact", b =>
@@ -222,6 +307,49 @@ namespace CarRentalPro.Migrations
                     b.ToTable("PasswordReset");
                 });
 
+            modelBuilder.Entity("CarRentalPro.Data.Models.PaymentDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CVV")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CarReservationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CardNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CardholderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DriverLicense")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ReservationId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarReservationId");
+
+                    b.ToTable("PaymentDetails");
+                });
+
             modelBuilder.Entity("CarRentalPro.Data.Models.Testimonials", b =>
                 {
                     b.Property<int>("Id")
@@ -318,6 +446,41 @@ namespace CarRentalPro.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Why");
+                });
+
+            modelBuilder.Entity("CarRentalPro.Data.Models.CarReservation", b =>
+                {
+                    b.HasOne("CarDetails", "CarDetails")
+                        .WithMany("CarReservations")
+                        .HasForeignKey("CarDetailsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CarRentalPro.Data.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CarDetails");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CarRentalPro.Data.Models.PaymentDetails", b =>
+                {
+                    b.HasOne("CarRentalPro.Data.Models.CarReservation", "CarReservation")
+                        .WithMany()
+                        .HasForeignKey("CarReservationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CarReservation");
+                });
+
+            modelBuilder.Entity("CarDetails", b =>
+                {
+                    b.Navigation("CarReservations");
                 });
 #pragma warning restore 612, 618
         }

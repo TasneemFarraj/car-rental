@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarRentalPro.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20240512122613_setCarSliderTable")]
-    partial class setCarSliderTable
+    [Migration("20240512122613_setCarDetailsTable")]
+    partial class setCarDetailsTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace CarRentalPro.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CarRentalPro.Data.Models.CarSlider", b =>
+            modelBuilder.Entity("CarRentalPro.Data.Models.CarDetails", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,7 +70,7 @@ namespace CarRentalPro.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CarSlider");
+                    b.ToTable("CarDetails");
                 });
 
             modelBuilder.Entity("CarRentalPro.Data.Models.User", b =>
