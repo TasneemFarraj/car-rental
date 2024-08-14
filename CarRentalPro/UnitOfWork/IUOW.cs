@@ -16,6 +16,7 @@ namespace CarRentalPro.UnitOfWork
         IPasswordResetRepository PasswordReset { get; set; }
         ICarReservationRepository CarReservation { get; set; }
         IPaymentDetailsRepository PaymentDetails { get; set; }
+        ICarFilterRepository CarFilter { get; set; }
 
 
 

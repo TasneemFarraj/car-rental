@@ -11,7 +11,7 @@ namespace CarRentalPro.UnitOfWork
 
         public UOW(AppDBContext db, IUserRepository user, IWhyRepositoy why, IAboutRepository about,
                    ITestimonialsRepository testimonials, IContactRepository contact, ICtaRepository cta, IHomeRepository home, IPasswordResetRepository passwordReset,
-                 ICarReservationRepository carReservation, ICarDetailsRepository cardetails, IPaymentDetailsRepository paymentDetails)
+                 ICarReservationRepository carReservation, ICarDetailsRepository cardetails, IPaymentDetailsRepository paymentDetails, ICarFilterRepository carFilter )
         {
             _db = db;
             User = user;
@@ -25,6 +25,7 @@ namespace CarRentalPro.UnitOfWork
             PasswordReset = passwordReset;
             CarReservation = carReservation;
             PaymentDetails = paymentDetails;
+            CarFilter = carFilter;
         }
 
         public IUserRepository User { get; set; }
@@ -38,7 +39,7 @@ namespace CarRentalPro.UnitOfWork
         public IPasswordResetRepository PasswordReset { get; set; }
         public ICarReservationRepository CarReservation { get ; set; }
         public IPaymentDetailsRepository PaymentDetails { get; set; }
-
+        public ICarFilterRepository CarFilter { get; set; }
 
 
         public async Task<int> SaveChangesAsync()

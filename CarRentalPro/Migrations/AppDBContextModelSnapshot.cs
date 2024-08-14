@@ -33,9 +33,6 @@ namespace CarRentalPro.Migrations
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CityName")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -81,7 +78,33 @@ namespace CarRentalPro.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CityId");
+
                     b.ToTable("CarDetails");
+                });
+
+            modelBuilder.Entity("CarFilter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DropOffDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PickUpDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("CarFilter");
                 });
 
             modelBuilder.Entity("CarRentalPro.Data.Models.About", b =>
@@ -124,28 +147,6 @@ namespace CarRentalPro.Migrations
                     b.ToTable("About");
                 });
 
-            modelBuilder.Entity("CarRentalPro.Data.Models.CarFilter", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DropOffDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("PickUpDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CarFilter");
-                });
-
             modelBuilder.Entity("CarRentalPro.Data.Models.CarReservation", b =>
                 {
                     b.Property<int>("Id")
@@ -157,7 +158,7 @@ namespace CarRentalPro.Migrations
                     b.Property<int>("CarDetailsId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DropOfDate")
+                    b.Property<DateTime>("DropOffDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsConfirmed")
@@ -180,22 +181,6 @@ namespace CarRentalPro.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("CarReservation");
-                });
-
-            modelBuilder.Entity("CarRentalPro.Data.Models.City", b =>
-                {
-                    b.Property<int>("CityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CityId"));
-
-                    b.Property<int>("CityName")
-                        .HasColumnType("int");
-
-                    b.HasKey("CityId");
-
-                    b.ToTable("City");
                 });
 
             modelBuilder.Entity("CarRentalPro.Data.Models.Contact", b =>
@@ -340,9 +325,6 @@ namespace CarRentalPro.Migrations
                     b.Property<bool>("IsPaid")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ReservationId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CarReservationId");
@@ -448,6 +430,44 @@ namespace CarRentalPro.Migrations
                     b.ToTable("Why");
                 });
 
+            modelBuilder.Entity("City", b =>
+                {
+                    b.Property<int>("CityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CityId"));
+
+                    b.Property<int>("CityName")
+                        .HasColumnType("int");
+
+                    b.HasKey("CityId");
+
+                    b.ToTable("City");
+                });
+
+            modelBuilder.Entity("CarDetails", b =>
+                {
+                    b.HasOne("City", "City")
+                        .WithMany("Cars")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
+                });
+
+            modelBuilder.Entity("CarFilter", b =>
+                {
+                    b.HasOne("City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
+                });
+
             modelBuilder.Entity("CarRentalPro.Data.Models.CarReservation", b =>
                 {
                     b.HasOne("CarDetails", "CarDetails")
@@ -481,6 +501,11 @@ namespace CarRentalPro.Migrations
             modelBuilder.Entity("CarDetails", b =>
                 {
                     b.Navigation("CarReservations");
+                });
+
+            modelBuilder.Entity("City", b =>
+                {
+                    b.Navigation("Cars");
                 });
 #pragma warning restore 612, 618
         }

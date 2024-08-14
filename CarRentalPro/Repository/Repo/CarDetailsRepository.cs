@@ -41,15 +41,7 @@ namespace CarRentalPro.Repository.Repo
             return data;
         }
 
-        public async Task<List<CarDetails>> GetListAsync(CarFilter filter)
-        {
-            return await _db.CarDetails
-                .Where(c => c.IsAvailable && c.CityId == filter.CityId &&
-                            !c.CarReservations.Any(r =>
-                                (filter.PickUpDate >= r.PickUpDate && filter.PickUpDate <= r.DropOfDate) ||
-                                (filter.DropOffDate >= r.PickUpDate && filter.DropOffDate <= r.DropOfDate)))
-                .ToListAsync();
-        }
+      
 
         public async Task UpdateCarDetails(CarDetails cardetails)
         {

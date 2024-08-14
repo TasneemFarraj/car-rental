@@ -47,6 +47,8 @@ internal class Program
         builder.Services.AddScoped<IPasswordResetRepository, PasswordResetRepository>();
         builder.Services.AddScoped<ICarReservationRepository, CarReservationRepository>();
         builder.Services.AddScoped<IPaymentDetailsRepository, PaymentDetailsRepository>();
+        builder.Services.AddScoped<ICarFilterRepository, CarFilterRepository>();
+
 
 
 

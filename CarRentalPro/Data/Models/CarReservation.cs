@@ -17,10 +17,8 @@ namespace CarRentalPro.Data.Models
           public int CarDetailsId { get; set; }
 
            public DateTime PickUpDate { get; set; }
-            public DateTime DropOfDate { get; set; }
+            public DateTime DropOffDate { get; set; }
             public string ReservationCode { get; set; }
-
-
             public User User { get; set; }         
             public CarDetails CarDetails { get; set; }
 

@@ -80,30 +80,29 @@ namespace CarRentalPro.Dtos.CredDtos
             public int CarDetailsId { get; set; }
             public DateTime PickUpDate { get; set; }
             public DateTime DropOffDate { get; set; }
-            public string ReservationCode { get; set; }
-            public bool IsConfirmed { get; set; }
         
 
 
     }
-   
         public class WritePaymentDetailsDto
         {
             public int Id { get; set; }
-            public int ReservationId { get; set; }
-            public string CardNumber { get; set; }
+        public int CarReservationId { get; set; }
+        public string CardNumber { get; set; }
             public string CardholderName { get; set; }
             public DateTime ExpiryDate { get; set; }
             public string CVV { get; set; }
             public IFormFile DriverLicense { get; set; }
-            public bool IsPaid { get; set; }
-        }
-    public class WriteCarFilterDto
-    {
-        public int CityId { get; set; }
-        public DateTime PickUpDate { get; set; }
-        public DateTime DropOffDate { get; set; }
     }
+
+        public class WriteCarFilterDto
+        {
+            public int CityId { get; set; }
+            public DateTime PickUpDate { get; set; }
+            public DateTime DropOffDate { get; set; }
+        }
+    
+
 
 
 }

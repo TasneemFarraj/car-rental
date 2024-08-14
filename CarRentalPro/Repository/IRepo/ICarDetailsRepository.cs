@@ -8,7 +8,6 @@ namespace CarRentalPro.Repository.IRepo
     {
         Task<CarDetails> GetAsync(int Id);
         Task<List<CarDetails>> GetListAsync();
-        Task<List<CarDetails>> GetListAsync(CarFilter filter); 
         Task AddCarDetails(CarDetails cardetails);
         Task UpdateCarDetails(CarDetails cardetails);
         Task DeleteCarDetails(int Id);

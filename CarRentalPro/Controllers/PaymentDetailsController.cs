@@ -7,6 +7,8 @@ using CarRentalPro.UnitOfWork;
 using CarRentalPro.Upload;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace CarRentalPro.Controllers
 {
@@ -16,12 +18,12 @@ namespace CarRentalPro.Controllers
     {
         private readonly AppDBContext _db;
         private readonly IUOW _uOW;
+
         public PaymentDetailsController(AppDBContext db, IUOW uOW)
         {
             _db = db;
             _uOW = uOW;
         }
-
 
         [HttpGet(nameof(GetPaymentDetailsById))]
         public async Task<ResponseStandardJsonApi> GetPaymentDetailsById(int Id)
@@ -32,7 +34,21 @@ namespace CarRentalPro.Controllers
             {
                 var mapper = AutoMapperConfig.CreateMapper();
                 var result = await _uOW.PaymentDetails.GetAsync(Id);
-                var data = mapper.Map<ReadPaymentDetailsDto>(result);
+
+                ReadPaymentDetailsDto data = null;
+                try
+                {
+                    data = mapper.Map<ReadPaymentDetailsDto>(result);
+                }
+                catch (Exception ex)
+                {
+                    apiResponse.Success = false;
+                    apiResponse.Message = "Error mapping PaymentDetails to ReadPaymentDetailsDto: " + ex.Message;
+                    apiResponse.Code = BadRequest().StatusCode;
+                    apiResponse.Result = new NullColumns[] { };
+                    return apiResponse;
+                }
+
                 if (data is not null)
                 {
                     apiResponse.Message = "Payment details retrieved";
@@ -59,47 +75,50 @@ namespace CarRentalPro.Controllers
             return apiResponse;
         }
 
-
-        [HttpPost(nameof(AddPaymentDetails))]
-        public async Task<ResponseStandardJsonApi> AddPaymentDetails([FromForm] WritePaymentDetailsDto dto)
+        [HttpPost(nameof(ConfirmPayment))]
+        public async Task<ResponseStandardJsonApi> ConfirmPayment([FromForm] WritePaymentDetailsDto paymentDetailsDto)
         {
-            var apiResponse = new ResponseStandardJsonApi();
+            var response = new ResponseStandardJsonApi();
 
-            try
+            // Validate input
+            if (string.IsNullOrWhiteSpace(paymentDetailsDto.CardNumber) ||
+                string.IsNullOrWhiteSpace(paymentDetailsDto.CardholderName) ||
+                paymentDetailsDto.ExpiryDate == default ||
+                string.IsNullOrWhiteSpace(paymentDetailsDto.CVV) ||
+                paymentDetailsDto.CarReservationId <= 0)
             {
-                var mapper = AutoMapperConfig.CreateMapper();
-                var data = mapper.Map<PaymentDetails>(dto);
-                if (dto.DriverLicense is not null)
-                    data.DriverLicense = ImageUploader.Upload(dto.DriverLicense, FileTypeEnum.Image, "https://localhost:5000/");
-
-                if (data is not null)
-                {
-                    await _uOW.PaymentDetails.AddPaymentDetails(data);
-                    apiResponse.Message = "Payment details added successfully";
-                    apiResponse.Code = Ok().StatusCode;
-                    apiResponse.Success = true;
-                    apiResponse.Result = data;
-                }
-                else
-                {
-                    apiResponse.Success = false;
-                    apiResponse.Message = "No Data";
-                    apiResponse.Code = NotFound().StatusCode;
-                    apiResponse.Result = new NullColumns[] { };
-                }
-            }
-            catch (Exception ex)
-            {
-                apiResponse.Success = false;
-                apiResponse.Message = ex.Message;
-                apiResponse.Code = BadRequest().StatusCode;
-                apiResponse.Result = new NullColumns[] { };
+                response.Success = false;
+                response.Message = "Invalid payment details. Please fill in all required fields.";
+                response.Code = BadRequest().StatusCode;
+                response.Result = Array.Empty<NullColumns>();
+                return response;
             }
 
-            return apiResponse;
+            var paymentDetails = new PaymentDetails
+            {
+                CarReservationId = paymentDetailsDto.CarReservationId,
+                CardNumber = paymentDetailsDto.CardNumber,
+                CardholderName = paymentDetailsDto.CardholderName,
+                ExpiryDate = paymentDetailsDto.ExpiryDate,
+                CVV = paymentDetailsDto.CVV,
+                IsPaid = true
+            };
+
+            // Handle DriverLicense upload
+            if (paymentDetailsDto.DriverLicense != null)
+            {
+                paymentDetails.DriverLicense = ImageUploader.Upload(paymentDetailsDto.DriverLicense, FileTypeEnum.Image, "https://localhost:5000/");
+            }
+
+            await _uOW.PaymentDetails.AddPaymentDetails(paymentDetails);
+
+            response.Success = true;
+            response.Message = "Payment details added successfully";
+            response.Code = Ok().StatusCode;
+            response.Result = paymentDetails;
+
+            return response;
         }
-
-
 
     }
 }

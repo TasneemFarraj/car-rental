@@ -8,8 +8,8 @@ namespace CarRentalPro.Data.Models
         [Key]
         public int Id { get; set; }
 
-        [ForeignKey(nameof(ReservationId))]   
-        public int ReservationId { get; set; } 
+        [ForeignKey(nameof(CarReservationId))]   
+        public int CarReservationId { get; set; } 
         public CarReservation CarReservation { get; set; }
      
         public string CardNumber { get; set; }

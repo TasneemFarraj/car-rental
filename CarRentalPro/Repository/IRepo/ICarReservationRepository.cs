@@ -7,9 +7,9 @@ namespace CarRentalPro.Repository.IRepo
     public interface ICarReservationRepository
     {
         Task<CarReservation> GetAsync(int Id);
-        Task<List<CarReservation>> GetListAsync();
+        Task<List<CarReservation>> GetAllReservations();
         Task AddCarReservation(CarReservation reservation);
-        Task UpdateCarReservation(CarReservation reservation);
+        Task ConfirmReservation(int Id);
         Task DeleteCarReservation(int Id);
     }
 }

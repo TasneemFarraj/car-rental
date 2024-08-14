@@ -98,50 +98,6 @@ namespace CarRentalPro.Controllers
             return apiResponse;
         }
 
-        [HttpGet("Filter")]
-        public async Task<ResponseStandardJsonApi> GetFilteredCars([FromQuery] ReadCarFilterDto filterDto)
-        {
-            var apiResponse = new ResponseStandardJsonApi();
-
-            try
-            {
-                var filter = new CarFilter
-                {
-                    CityId = filterDto.CityId,
-                    PickUpDate = filterDto.PickUpDate,
-                    DropOffDate = filterDto.DropOffDate
-                };
-
-                var result = await _uOW.CarDetails.GetListAsync(filter);
-                var mapper = AutoMapperConfig.CreateMapper();
-                var data = mapper.Map<List<ReadCarDetailsDto>>(result);
-
-                if (data is not null)
-                {
-                    apiResponse.Message = "Show Rows";
-                    apiResponse.Code = Ok().StatusCode;
-                    apiResponse.Success = true;
-                    apiResponse.Result = data;
-                }
-                else
-                {
-                    apiResponse.Success = false;
-                    apiResponse.Message = "No Data";
-                    apiResponse.Code = NotFound().StatusCode;
-                    apiResponse.Result = new NullColumns[] { };
-                }
-            }
-            catch (Exception ex)
-            {
-                apiResponse.Success = false;
-                apiResponse.Message = ex.Message;
-                apiResponse.Code = BadRequest().StatusCode;
-                apiResponse.Result = new NullColumns[] { };
-            }
-
-            return apiResponse;
-        }
-
 
         [HttpPost(nameof(AddCarDetails))]
         public async Task<ResponseStandardJsonApi> AddCarDetails([FromForm] WriteCarDetailsDto dto)

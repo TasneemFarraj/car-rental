@@ -18,6 +18,8 @@ namespace CarRentalPro.Dtos.CredDtos
         public string Transmission { get; set; }
 
         public int SuitCase { get; set; }
+         public int CityId { get; set; }
+
     }
     public class ReadWhyDto
     {
@@ -78,32 +80,38 @@ namespace CarRentalPro.Dtos.CredDtos
 
     public class ReadCarReservationDto
     {
-            public int Id { get; set; }
-            public int UserId { get; set; }
-            public int CarDetailsId { get; set; }
-            public DateTime PickUpDate { get; set; }
-            public DateTime DropOffDate { get; set; }
-            public string ReservationCode { get; set; }
-            public bool IsConfirmed { get; set; }
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public int CarDetailsId { get; set; }
+        public DateTime PickUpDate { get; set; }
+        public DateTime DropOffDate { get; set; }
+        public bool IsConfirmed { get; set; }
+
     }
-}
-public class ReadPaymentDetailsDto
+
+    public class ReadPaymentDetailsDto
     {
         public int Id { get; set; }
-        public int ReservationId { get; set; }
+        public int CarReservationId { get; set; }
         public string CardNumber { get; set; }
         public string CardholderName { get; set; }
         public DateTime ExpiryDate { get; set; }
         public string CVV { get; set; }
-        public IFormFile DriverLicense { get; set; }
+        public string DriverLicense { get; set; }
         public bool IsPaid { get; set; }
+
     }
-    public class ReadCarFilterDto
-    {
-        public int CityId { get; set; }
-        public DateTime PickUpDate { get; set; }
-        public DateTime DropOffDate { get; set; }
+   
+
+        public class ReadCarFilterDto
+        {
+            public int CityId { get; set; }
+            public DateTime PickUpDate { get; set; }
+            public DateTime DropOffDate { get; set; }
+        }
     }
+
+
 
 
 
