@@ -16,7 +16,9 @@ namespace CarRentalPro.Data.Models
         public string CardholderName { get; set; }
         public DateTime ExpiryDate { get; set; }
         public string CVV { get; set; }
-        public string DriverLicense { get; set; } 
-        public bool IsPaid { get; set; } 
+        public string? DriverLicense { get; set; } 
+        public bool IsPaid { get; set; }
+        public string Email { get; set; }
+
     }
 }

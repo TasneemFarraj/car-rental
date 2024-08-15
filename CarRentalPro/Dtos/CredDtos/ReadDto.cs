@@ -1,4 +1,6 @@
 ﻿using CarRentalPro.Data.Enum;
+using CarRentalPro.Data.Models;
+using CarRentalPro.Dtos.UserDtos;
 using System.ComponentModel.DataAnnotations;
 
 namespace CarRentalPro.Dtos.CredDtos
@@ -18,8 +20,7 @@ namespace CarRentalPro.Dtos.CredDtos
         public string Transmission { get; set; }
 
         public int SuitCase { get; set; }
-         public int CityId { get; set; }
-
+        public CityEnum City { get; set; }
     }
     public class ReadWhyDto
     {
@@ -39,7 +40,6 @@ namespace CarRentalPro.Dtos.CredDtos
         public int Customers { get; set; }
         public int TotalCars { get; set; }
         public int Offers { get; set; }
-
     }
     public class ReadTestimonialsDto
     {
@@ -58,13 +58,11 @@ namespace CarRentalPro.Dtos.CredDtos
         public string RentalPoints { get; set; }
         public string pages { get; set; }
         public string WorkingHours { get; set; }
-
     }
     public class ReadCtaDto
     {
         public int Id { get; set; }
         public string Image { get; set; }
-
     }
     public class ReadHomeDto
     {
@@ -74,10 +72,7 @@ namespace CarRentalPro.Dtos.CredDtos
         public string Image { get; set; }
         public string Description { get; set; }
         public string Title { get; set; }
-
     }
-
-
     public class ReadCarReservationDto
     {
         public int Id { get; set; }
@@ -85,10 +80,10 @@ namespace CarRentalPro.Dtos.CredDtos
         public int CarDetailsId { get; set; }
         public DateTime PickUpDate { get; set; }
         public DateTime DropOffDate { get; set; }
+        public UserDto User { get; set; }
+        public ReadCarDetailsDto CarDetails { get; set; }
         public bool IsConfirmed { get; set; }
-
     }
-
     public class ReadPaymentDetailsDto
     {
         public int Id { get; set; }
@@ -97,19 +92,22 @@ namespace CarRentalPro.Dtos.CredDtos
         public string CardholderName { get; set; }
         public DateTime ExpiryDate { get; set; }
         public string CVV { get; set; }
-        public string DriverLicense { get; set; }
         public bool IsPaid { get; set; }
-
+        public string Email { get; set; }
     }
-   
+    public class ReadUploadDriverLicenseDto
+    {
+        public int CarReservationId { get; set; }
+        public string DriverLicense { get; set; }
+    }
 
-        public class ReadCarFilterDto
-        {
+    public class ReadCarFilterDto
+    {    
             public int CityId { get; set; }
             public DateTime PickUpDate { get; set; }
             public DateTime DropOffDate { get; set; }
-        }
     }
+}
 
 
 

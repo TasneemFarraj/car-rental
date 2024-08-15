@@ -46,6 +46,8 @@ namespace CarRentalPro.AutoMapper
 
                 M.CreateMap<PaymentDetails, WritePaymentDetailsDto>().ReverseMap();
                 M.CreateMap<PaymentDetails, ReadPaymentDetailsDto>().ReverseMap();
+                M.CreateMap<PaymentDetails, ReadUploadDriverLicenseDto>().ReverseMap();
+                M.CreateMap<PaymentDetails, WriteUploadDriverLicenseDto>().ReverseMap();
 
                 M.CreateMap<CarFilter, WriteCarFilterDto>().ReverseMap();
                 M.CreateMap<CarFilter, ReadCarFilterDto>().ReverseMap();

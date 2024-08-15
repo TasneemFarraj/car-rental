@@ -1,4 +1,5 @@
 ﻿using CarRentalPro.Data.Enum;
+using CarRentalPro.Dtos.UserDtos;
 using System.ComponentModel.DataAnnotations;
 
 namespace CarRentalPro.Dtos.CredDtos
@@ -17,9 +18,11 @@ namespace CarRentalPro.Dtos.CredDtos
         public string Petrol { get; set; }
         public string Transmission { get; set; }
         public int SuitCase { get; set; }
+        public CityEnum City { get; set; }
+
     }
 
-        public class WriteWhyDto
+    public class WriteWhyDto
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -75,34 +78,51 @@ namespace CarRentalPro.Dtos.CredDtos
     public class WriteCarReservationDto
     {
       
-            public int Id { get; set; }
-            public int UserId { get; set; }
-            public int CarDetailsId { get; set; }
-            public DateTime PickUpDate { get; set; }
-            public DateTime DropOffDate { get; set; }
-        
-
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public int CarDetailsId { get; set; }
+        public DateTime PickUpDate { get; set; }
+        public DateTime DropOffDate { get; set; }
 
     }
-        public class WritePaymentDetailsDto
-        {
-            public int Id { get; set; }
+    public class WritePaymentDetailsDto
+    {
+        public int Id { get; set; }
         public int CarReservationId { get; set; }
-        public string CardNumber { get; set; }
-            public string CardholderName { get; set; }
-            public DateTime ExpiryDate { get; set; }
-            public string CVV { get; set; }
-            public IFormFile DriverLicense { get; set; }
+        public string CardNumber { get; set; }  
+        public string CardholderName { get; set; }
+        public DateTime ExpiryDate { get; set; }
+        public string CVV { get; set; } 
+        public string Email { get; set; }
+    }
+    public class WriteUploadDriverLicenseDto
+    {
+        public int CarReservationId { get; set; }
+        public IFormFile DriverLicense { get; set; }
+    }
+    public class WriteCarFilterDto
+    {    
+        public int CityId { get; set; }
+        public DateTime PickUpDate { get; set; }
+        public DateTime DropOffDate { get; set; }
+     }   
+    public class CarReservationResponseDto
+    {
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public UserDto User { get; set; }
+        public int CarDetailsId { get; set; }
+        public ReadCarDetailsDto CarDetails { get; set; }
+        public DateTime PickUpDate { get; set; }
+        public DateTime DropOffDate { get; set; }
+        public string ReservationCode { get; set; }
+        public bool IsConfirmed { get; set; }
     }
 
-        public class WriteCarFilterDto
-        {
-            public int CityId { get; set; }
-            public DateTime PickUpDate { get; set; }
-            public DateTime DropOffDate { get; set; }
-        }
-    
-
-
+    public class VerifyPaymentDto
+    {
+        public int CarReservationId { get; set; }
+        public string VerificationCode { get; set; }
+    }
 
 }

@@ -15,6 +15,7 @@ namespace CarRentalPro.Repository.Repo
 
         public async Task AddCarDetails(CarDetails cardetails)
         {
+            cardetails.IsAvailable = true;
             await _db.CarDetails.AddAsync(cardetails);
             await _db.SaveChangesAsync();
         }

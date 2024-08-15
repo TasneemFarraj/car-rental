@@ -19,16 +19,15 @@ namespace CarRentalPro.Controllers
             _uOW = uOW;
         }
 
-        [HttpPost("FilterCars")]
-        public async Task<ResponseStandardJsonApi> FilterCars([FromForm] WriteCarFilterDto carFilterDto)
+        [HttpGet("FilterCars")]
+        public async Task<ResponseStandardJsonApi> FilterCars([FromQuery] CarFilter carFilterDto)
         {
             var apiResponse = new ResponseStandardJsonApi();
 
             try
             {
                 var mapper = AutoMapperConfig.CreateMapper();
-                var carFilter = mapper.Map<CarFilter>(carFilterDto);
-                var cars = await _uOW.CarFilter.GetFilteredCarsAsync(carFilter);
+                var cars = await _uOW.CarFilter.GetFilteredCarsAsync(carFilterDto);
                 var data = mapper.Map<List<ReadCarDetailsDto>>(cars);
 
                 apiResponse.Message = "Filtered Cars";

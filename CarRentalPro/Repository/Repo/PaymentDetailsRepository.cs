@@ -26,5 +26,10 @@ namespace CarRentalPro.Repository.Repo
             await _db.PaymentDetails.AddAsync(paymentDetails);
             await _db.SaveChangesAsync();
         }
+        public async Task UpdatePaymentDetails(PaymentDetails paymentDetails)
+        {
+            _db.PaymentDetails.Update(paymentDetails);
+            await _db.SaveChangesAsync();
+        }
     }
 }

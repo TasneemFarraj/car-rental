@@ -18,11 +18,11 @@ namespace CarRentalPro.Repository.Repo
 
         public async Task<List<CarDetails>> GetFilteredCarsAsync(CarFilter carFilter)
         {
-            var query = _db.CarDetails.AsQueryable();
+            var query = _db.CarDetails.Where(x=>x.IsAvailable==true).AsQueryable();
 
-            if (carFilter.CityId > 0)
+            if (carFilter.City.HasValue)
             {
-                query = query.Where(car => car.CityId == carFilter.CityId);
+                query = query.Where(car => car.City == carFilter.City);
             }
 
             if (carFilter.PickUpDate != default(DateTime))

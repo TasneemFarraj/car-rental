@@ -19,9 +19,6 @@ namespace CarRentalPro.Data.Models
         public DbSet<PasswordReset> PasswordReset { get; set; }
         public DbSet<CarReservation> CarReservation { get; set; }
         public DbSet<PaymentDetails> PaymentDetails { get; set; }
-        public DbSet<City> City { get; set; }
-        public DbSet<CarFilter> CarFilter { get; set; }
-
 
 
     }

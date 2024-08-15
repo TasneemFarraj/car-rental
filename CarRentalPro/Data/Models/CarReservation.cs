@@ -4,26 +4,26 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarRentalPro.Data.Models
+{
+    public class CarReservation
     {
-        public class CarReservation
-        {
-            [Key]
-            public int Id { get; set; } 
-        
-         [ForeignKey(nameof(UserId))]
-            public int UserId { get; set; }
+        [Key]
+        public int Id { get; set; }
 
-         [ForeignKey(nameof(CarDetailsId))]
-          public int CarDetailsId { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public int UserId { get; set; }
 
-           public DateTime PickUpDate { get; set; }
-            public DateTime DropOffDate { get; set; }
-            public string ReservationCode { get; set; }
-            public User User { get; set; }         
-            public CarDetails CarDetails { get; set; }
+        [ForeignKey(nameof(CarDetailsId))]
+        public int CarDetailsId { get; set; }
 
-            public bool IsConfirmed { get; set; }
-         
+        public DateTime PickUpDate { get; set; }
+        public DateTime DropOffDate { get; set; }
+        public string ReservationCode { get; set; }
+        public User User { get; set; }
+        public CarDetails CarDetails { get; set; }
+
+        public bool IsConfirmed { get; set; }
+
 
     }
 }

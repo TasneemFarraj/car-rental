@@ -7,5 +7,7 @@ namespace CarRentalPro.Repository.IRepo
     {
         Task<PaymentDetails> GetAsync(int Id);
         Task AddPaymentDetails(PaymentDetails paymentDetails);
+        Task UpdatePaymentDetails(PaymentDetails paymentDetails);
+
     }
 }

@@ -24,9 +24,11 @@ internal class Program
 
         // Add services to the container.
         builder.Services.AddDbContext<AppDBContext>(op =>
-        op.UseSqlServer(builder.Configuration.GetConnectionString("myCon")));
+        op.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
         builder.Services.AddScoped<MailService>();
         builder.Services.AddSingleton<AccountManagementMailService>();
+        builder.Services.AddScoped<SendVerificationCodeEmailService>();
+        builder.Services.AddScoped<SendPaymentConfirmationEmailService>();
 
         builder.Services.AddControllers().AddNewtonsoftJson();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -48,11 +50,6 @@ internal class Program
         builder.Services.AddScoped<ICarReservationRepository, CarReservationRepository>();
         builder.Services.AddScoped<IPaymentDetailsRepository, PaymentDetailsRepository>();
         builder.Services.AddScoped<ICarFilterRepository, CarFilterRepository>();
-
-
-
-
-
 
 
 
